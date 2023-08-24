@@ -12,6 +12,40 @@ module.exports = {
     }
   },
 
+  updateProduct: async (req, res) => {
+    const { name, price, description, imageUrl, location } = req.body;
+    const product = await Products.findById(req.params.id);
+
+    if (product) {
+      product.name = name || product.name;
+      product.price = price || product.price;
+      product.description = description || product.description;
+      product.imageUrl = imageUrl || product.imageUrl;
+      product.location = location || product.location;
+
+      const updatedProduct = await product.save();
+      res.status(200).json({
+        success: true,
+        message: "Product successfully updated",
+        product: updatedProduct,
+      });
+    } else {
+      res.status(404);
+      throw new Error("Product not found");
+    }
+  },
+
+  deleteProduct: async (req, res) => {
+    const product = await Products.findById(req.params.id);
+    if (product) {
+      await product.remove();
+      res.json({ message: "Product deleted successfully" });
+    } else {
+      res.status(404);
+      throw new Error("Product Not Found");
+    }
+  },
+
   getAllProducts: async (req, res) => {
     try {
       const products = await Products.find().sort({ createAt: -1 });
