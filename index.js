@@ -4,6 +4,7 @@ const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const app = express();
 const productRouter = require("./routes/productRoutes");
+const userRouter = require("./routes/userRoutes");
 
 
 dotenv.config();
@@ -20,5 +21,6 @@ app.use(express.urlencoded({ limit: "10mb", extended: true }));
 app.use(cors());
 
 app.use("/api/v1/products", productRouter);
+app.use("/api/v1/user", userRouter);
 
 app.listen(port, () => console.log(`Furniture app listening on port ${port}!`));
