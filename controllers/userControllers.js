@@ -147,6 +147,9 @@ const updateUser = async (req, res) => {
       user.name = req?.body?.name || user?.name;
       user.email = req?.body?.email || user?.email;
       user.imageUrl = req?.body?.imageUrl || user?.imageUrl;
+      user.phoneNumber = req?.body?.phoneNumber || user?.phoneNumber;
+      user.address = req?.body?.address || user?.address;
+      user.birthDay = req?.body?.birthDay || user?.birthDay;
       if (req.body.password) {
         user.password = req.body.password;
       }
