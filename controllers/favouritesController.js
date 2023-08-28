@@ -29,7 +29,7 @@ module.exports = {
         throw new Error("No product found");
       }
     } catch (error) {
-      res.status(500).json({ message: error.message });
+      res.status(404).json({ message: error.message });
     }
   },
   deleteFavouriteProduct: async (req, res) => {
