@@ -15,7 +15,7 @@ favouritesRouter.get(
   favouritesController.getFavouriteProducts
 );
 favouritesRouter.delete(
-  "/:id",
+  "/delete/:id",
   auth.verify,
   favouritesController.deleteFavouriteProduct
 );
