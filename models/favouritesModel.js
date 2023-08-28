@@ -5,7 +5,11 @@ const products = productsModel.ProductSchema;
 
 const FavouritesSchema = mongoose.Schema(
   {
-    products: [products],
+    products: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "Products",
+    },
     user: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,

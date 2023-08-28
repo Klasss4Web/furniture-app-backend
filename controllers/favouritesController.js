@@ -3,11 +3,20 @@ const userModel = require("../models/userModel");
 
 module.exports = {
   createFavouriteProduct: async (req, res) => {
-    const favouriteProduct = new Favourites(req.body);
-
     try {
-      await favouriteProduct.save();
-      res.status(200).json({ message: "Product added successfully" });
+      const usersFavourites = await Favourites.find({
+        products: req.body.products._id,
+      });
+
+      if (usersFavourites) {
+        res
+          .status(400)
+          .json({ message: "You have already added this product to list" });
+      } else {
+        const favouriteProduct = new Favourites(req.body);
+        await favouriteProduct.save();
+        res.status(200).json({ message: "Product added successfully" });
+      }
     } catch (err) {
       res.status(500).json({ message: "Failed to add the product" });
     }
@@ -15,7 +24,12 @@ module.exports = {
   getFavouriteProducts: async (req, res) => {
     try {
       // const user = await userModel.findById(req.user._id);
-      const usersFavourites = await Favourites.find({ user: req.user._id });
+      const usersFavourites = await Favourites.find({
+        user: req.user._id,
+      }).populate(
+        "products",
+        "name _id supplier imageUrl price description location"
+      );
       console.log("FAV", usersFavourites);
 
       if (usersFavourites.length > 0) {
