@@ -4,7 +4,7 @@ const userModel = require("../models/userModel");
 module.exports = {
   createFavouriteProduct: async (req, res) => {
     try {
-      const usersFavourites = await Favourites.find({
+      const usersFavourites = await Favourites.findOne({
         products: req.body.products._id,
       });
 
